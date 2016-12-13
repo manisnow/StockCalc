@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework</groupId>
-    <artifactId>gs-serving-web-content</artifactId>
+    <artifactId>gs-spring-boot</artifactId>
     <version>0.1.0</version>
 
     <parent>
@@ -16,32 +16,49 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!-- tag::actuator[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <!-- end::actuator[] -->
+        <!-- tag::tests[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- end::tests[] -->
     </dependencies>
+    
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
-
-
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
+                            <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+<plugin>
+        <groupId>com.google.appengine</groupId>
+        <artifactId>gcloud-maven-plugin</artifactId>
+        <version>2.0.9.106.v20160420</version>
+      </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -19,6 +19,7 @@
 													//		'<tr> </td> <td> <select> <option value="NSE">NSE</option> <option value="BSE">BSE</option>  </select> </td>    		<td> <input type="text" id="stockName"> </td>    		<td> <input type="text" id="stockValue" readonly="readonly"> </td> <td><input type="text"  ></td>  <td> <input type="text" readonly="readonly" > </td> <td> <input type="text" readonly="readonly" > </td>  </tr> ');
 
 										alert($("#firstRow").html());
+										
 										$("#customFields").append($("#firstRow").html());
 										});
 
@@ -27,10 +28,10 @@
 								'#stockName',
 								function() {
 
-									alert("TEST");
+									//alert("TEST");
 									$
 											.get(
-													"http://localhost:8080/stockValue?stockName="
+													"/stockValue?stockName="
 															+ $("#stockName")
 																	.val(),
 													function(data, status) {
