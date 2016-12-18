@@ -6,10 +6,6 @@ public class Stock {
 	
 	
 	
-	
-	
-	
-	
 	/* [
 	{
 	"id": "784961"

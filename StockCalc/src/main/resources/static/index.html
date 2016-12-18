@@ -1,101 +1,37 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-<title>Getting Started: Serving Web Content</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script>
-	$(document)
-			.ready(
-					function() {
+  <head>
+    <title>Angular Tour of Heroes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
 
-						$(".addCF")
-								.click(
-										function() {
+    <!-- Polyfills for older browsers -->
+    <script src="https://unpkg.com/core-js/client/shim.min.js"></script>
 
-											//$("#customFields")
-												//	.append(
-													//		'<tr> </td> <td> <select> <option value="NSE">NSE</option> <option value="BSE">BSE</option>  </select> </td>    		<td> <input type="text" id="stockName"> </td>    		<td> <input type="text" id="stockValue" readonly="readonly"> </td> <td><input type="text"  ></td>  <td> <input type="text" readonly="readonly" > </td> <td> <input type="text" readonly="readonly" > </td>  </tr> ');
+    <script src="https://unpkg.com/zone.js@0.7.2?main=browser"></script>
+    <script src="https://unpkg.com/reflect-metadata@0.1.8"></script>
+    <script src="https://unpkg.com/systemjs@0.19.39/dist/system.src.js"></script>
 
-										alert($("#firstRow").html());
-										
-										$("#customFields").append($("#firstRow").html());
-										});
+    <script src="https://cdn.rawgit.com/angular/angular.io/b3c65a9/public/docs/_examples/_boilerplate/systemjs.config.web.js"></script>
+    <script>
+    
+      System.import('app').catch(function(err){ console.error(err); });
 
-						$("#customFields").on(
-								'blur',
-								'#stockName',
-								function() {
+      
+         
+        
+    </script>
+  </head>
 
-									//alert("TEST");
-									$
-											.get(
-													"/stockValue?stockName="
-															+ $("#stockName")
-																	.val(),
-													function(data, status) {
-														alert("Data: " + data
-																+ "\nStatus: "
-																+ status);
-														$("#stockValue").val(
-																data);
-													});
-								});
-
-						$("#customFields").on('click', '.remCF', function() {
-							$(this).parent().parent().remove();
-						});
-
-					});
-</script>
-
-</head>
-<body>
-	<p>
-		Get your greeting <a href="/greeting">here</a>
-	</p>
-
-	<form action="GET">
-		<table>
-			<tr>
-				<td>Investment</td>
-				<td><input type="text"></td>
-			</tr>
-			
-			
-
-		</table>
-		<a href="javascript:void(0);" class="addCF">Add</a>
-		<table class="form-table" id="customFields">
-			<tr>
-				<th>Exchange</th>
-				<th>script</th>
-				<th>Percentage</th>
-				<th>Quantity</th>
-				<th>Value</th>
-			</tr>
-		
-
-
-
-				<tr id="firstRow">
-					
-					<td><select>
-							<option value="NSE">NSE</option>
-							<option value="BSE">BSE</option>
-					</select></td>
-					<td><input type="text" id="stockName"></td>
-					<td><input type="text" id="stockValue" readonly="readonly">
-					</td>
-					<td><input type="text"></td>
-					<td><input type="text" readonly="readonly"></td>
-					<td><input type="text" readonly="readonly"></td>
-				</tr>
-</table>
-		
-
-	</form>
-
-</body>
+  <body>
+    <my-app>Loading...</my-app>
+  </body>
 </html>
+
+
+<!-- 
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->
