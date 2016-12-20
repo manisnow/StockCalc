@@ -8,6 +8,7 @@ import { AppComponent }  from './app.component';
 import { LoginComponent } from './login.component';
 import { StockComponent } from  './stock.component'; 
 
+
 const appRoutes: Routes = [
 { path: '' ,  redirectTo :'home',pathMatch: 'full'  },
 { path: 'home' ,  component: StockComponent },
@@ -25,8 +26,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   declarations: [
-    AppComponent,LoginComponent,StockComponent
-  ],
+    AppComponent,LoginComponent,StockComponent],
   bootstrap: [ AppComponent]
 })
 export class AppModule { }

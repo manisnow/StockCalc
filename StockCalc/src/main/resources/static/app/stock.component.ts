@@ -7,10 +7,11 @@ import { Configuration } from 'app/app.constants';
 
 
 
+
 @Component({
-    selector: 'stock-form',
-    providers: [DataService, AuthenticationService,Configuration],
-    template: `
+  selector: 'stock-form',
+  providers: [DataService, AuthenticationService, Configuration],
+  template: `
 
 
   <div class="container" >
@@ -27,8 +28,13 @@ import { Configuration } from 'app/app.constants';
           <button (click)="closeAlert()">Hide</button>   
           
         </div><br>
-  <label>Investment</label> &nbsp; <input #investTextBox type="text" [(ngModel)] = "investTextValue"><br><br>
-   
+      
+      <select  [(ngModel)]="exchangeName">
+        <option *ngFor="let value of exchangeNames" [ngValue]="value">{{value}}</option>
+      </select>
+      
+  
+        <label>Investment</label> &nbsp; <input #investTextBox type="number"  [(ngModel)] = "investTextValue"    min=1 max=9999999999 step=5><br><br>
         <input #textbox type="text" [(ngModel)] ="textValue" (keyup)="onKey($event,textbox.value)">       
         <button (click)="getStock(textbox.value)">get Stocks</button>       
         <button (click)="clearTextArea()">Clear</button> 
@@ -46,7 +52,12 @@ import { Configuration } from 'app/app.constants';
             <tr *ngFor="let sto of stocks">
                 <td>{{sto.t}}</td>
                 <td>{{sto.l}}</td> 
-                <td><input type="text" [(ngModel)]="sto.percentage" (blur)="updateTotal(sto)" >
+                <td><input type="number"  [(ngModel)]="sto.percentage"  min=1 max=100 step=5 (keyup)="updateTotal(sto)" >
+         
+                     </td>
+
+
+
                 <td>{{sto.qty}} </td>
                  <td>{{sto.totalAmt}} </td>
                 <td> <button (click)="removeStock(sto)">Remove</button> </td>
@@ -57,7 +68,7 @@ import { Configuration } from 'app/app.constants';
         </div>
             </div>
         `,
-    directives: [CORE_DIRECTIVES]
+  directives: [CORE_DIRECTIVES]
 
 
 
@@ -65,112 +76,142 @@ import { Configuration } from 'app/app.constants';
 })
 export class StockComponent {
 
-    /*stock.setId("784961");
-      stock.setT("TCS");
-      stock.setE("NSE");
-      stock.setL("2,299.80");
-      stock.setL_fix("2,299.80");
-      stock.setL_cur("&#8377;2,299.80");
-      stock.setS("0");
-      stock.setLtt("3:48PM GMT+5:30");*/
-    private textValue = "";
-    private textAreaValue = "";
-    private investTextValue="";
-    private stocksArray: Array<string> = new Array<string>();
-    private stocks: Stock[] = [];
-    private stock: Stock;
-    private errorMessage:string;
-    private isError:boolean=false;
-    
+  /*stock.setId("784961");
+    stock.setT("TCS");
+    stock.setE("NSE");
+    stock.setL("2,299.80");
+    stock.setL_fix("2,299.80");
+    stock.setL_cur("&#8377;2,299.80");
+    stock.setS("0");
+    stock.setLtt("3:48PM GMT+5:30");*/
+  private textValue = "";
+  private textAreaValue = "";
+  private investTextValue = "";
+  private stocksArray: Array<string> = new Array<string>();
+  private stocks: Stock[] = [];
+  private stock: Stock;
+  private errorMessage: string;
+  private isError: boolean = false;
+  private exchangeNames: string[] =['NSE','BSE'];
+  private exchangeName: string;
 
 
+
+
+  logout() {
+    this._service.logout();
+  }
+
+
+  constructor(private _dataService: DataService, private _service: AuthenticationService) {
+
+  }
+
+  ngOnInit() {
+    this._service.checkCredentials();
+  }
+
+  
  
+   private selectExchange(value:string) {
+    this.exchangeName = value;
+  }
   
- 
-    logout() {
-        this._service.logout();
-    }
+  private closeAlert() {
+    this.isError = false;
+  }
+
+  private updateStock(value: string) {
+    this.stocksArray.push(value);
+    this.textAreaValue = this.stocksArray.join("\n");
+  }
 
 
-    constructor(private _dataService: DataService, private _service:AuthenticationService) {
 
-    }
-
-      ngOnInit(){
-        this._service.checkCredentials();
-    }
-
-   private closeAlert(){
-    this.isError=false;
-   }
-
-    private updateStock(value: string) {
-        this.stocksArray.push(value);
-        this.textAreaValue = this.stocksArray.join("\n");
-    }
-  
-  
-
-    private clearTextArea() {
-        this.stocksArray = [];
-        this.textAreaValue = this.stocksArray;
-    }
+  private clearTextArea() {
+    this.stocksArray = [];
+    this.textAreaValue = this.stocksArray;
+  }
 
 
-    private updateTotal(sto:Stock){
-        console.log("Percentage" + sto.percentage);
-        console.log("Percentage" + (sto.percentage/100));
-        console.log("Percentage" +(this.investTextValue *(sto.percentage/100)));
-        console.log("Percentage" + ((this.investTextValue *(sto.percentage/100)) / sto.l));
-        if(this.investTextValue == ""){
-            this.errorMessage="Please Enter the Investment Amount";
-            this.isError=true;
-        }else{
-          
-          sto.qty= Math.floor((this.investTextValue *(sto.percentage/100)) / sto.l_fix);
-          sto.totalAmt=sto.qty * sto.l_fix;
-        }
-    }
+  private updateTotal(sto: Stock) {
 
+    if (this.getTotalStockPercentage() > 100) {
 
-    private onKey(event: KeyboardEvent, value: string) { // with type info
-
-        if (event.keyCode == 13) {
-            console.log(value + ' char code' + event.keyCode);
-            this.getStock(value);
-        }
-
-    }
-
-    private getStock(value: string): void {
-
-
-     var    tempStock:Stock[]=[];
-        this._dataService
-            .GetSingle(value)
-            .subscribe((data: Stock[]) => tempStock = data,
-            error => console.log(error),
-            () =>               
-               {
-
-                this.stocks.push(tempStock[0]);
-               console.log('Get all Items complete' + tempStock[0].t);
-               
-            });
-    }
-
- private removeStock(sto: Stock): void {
-  
-   
-   var index = this.stocks.indexOf(sto, 0);
-   if (index > -1) {
-   this.stocks.splice(index, 1);
-   }
-
+      sto.percentage = 0;
+      this.errorMessage = "Total Percentage can not bemore than 100 %";
+      this.isError = true;
+    } else {
+      
     
+    console.log("Percentage" + sto.percentage);
+    console.log("Percentage" + (sto.percentage / 100));
+    console.log("Percentage" + (this.investTextValue * (sto.percentage / 100)));
+    console.log("Percentage" + ((this.investTextValue * (sto.percentage / 100)) / sto.l));
+    if (this.investTextValue == "") {
+      this.errorMessage = "Please Enter the Investment Amount";
+      this.isError = true;
+    } else {
+
+      sto.qty = Math.floor((this.investTextValue * (sto.percentage / 100)) / sto.l_fix);
+      sto.totalAmt = sto.qty * sto.l_fix;
+     }
+      
+    }
+  }
+
+
+  private onKey(event: KeyboardEvent, value: string) { // with type info
+
+    if (event.keyCode == 13) {
+      console.log(value + ' char code' + event.keyCode);
+      this.textValue = '';
+      this.getStock(value);
     }
 
-  
+  }
+
+  private getTotalStockPercentage(): number {
+    var percentage: number = 0;
+
+    for (let sto of this.stocks) {
+      percentage += sto.percentage;
+    }
+
+
+
+    return percentage;
+  }
+
+  private getStock(value: string): void {
+
+      console.log(this.exchangeName);
+    
+    var tempStock: Stock[] = [];
+    this._dataService
+      .GetSingle(value)
+      .subscribe((data: Stock[]) => tempStock = data,
+      error => console.log(error),
+      () => {
+
+        this.stocks.push(tempStock[0]);
+        console.log('Get all Items complete' + tempStock[0].t);
+
+      });
+  }
+
+  private removeStock(sto: Stock): void {
+
+
+    var index = this.stocks.indexOf(sto, 0);
+    if (index > -1) {
+      this.stocks.splice(index, 1);
+    }
+
+
+  }
+
+
 
 
 }
