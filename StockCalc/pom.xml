@@ -18,6 +18,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+	</dependency>
         <!-- tag::actuator[] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -31,6 +35,19 @@
             <scope>test</scope>
         </dependency>
         <!-- end::tests[] -->
+        
+        <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>6.0.5</version>
+</dependency>
+
+
+      <dependency>
+  <groupId>com.google.cloud.sql</groupId>
+  <artifactId>mysql-socket-factory</artifactId>
+  <version>1.0.2</version>
+</dependency>
     </dependencies>
     
 
@@ -40,7 +57,7 @@
     <build>
         <plugins>
             <plugin>
-                            <groupId>org.springframework.boot</groupId>
+               <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 <plugin>
