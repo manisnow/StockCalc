@@ -32,6 +32,11 @@ export class DataService {
             .catch(this.handleError);
     }
 
+  public GetSingleByExcahngeName = (id: string,exchangeName:string): Observable<Stock[]> => {
+        return this._http.get(this.actionUrl + id+"?exchange="+exchangeName)
+            .map((response: Response) => <Stock[]>response.json())
+            .catch(this.handleError);
+    }
     /*public Add = (itemName: string): Observable<Stock> => {
         let toAdd = JSON.stringify({ ItemName: itemName });
 

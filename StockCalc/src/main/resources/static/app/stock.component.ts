@@ -41,6 +41,7 @@ import { Configuration } from 'app/app.constants';
         
         <table>
         <thead>
+            <th>Excahnge</th>
             <th>Stock Name</th>
             <th>Stock Price</th>
             <th>Percentage</th>
@@ -50,6 +51,7 @@ import { Configuration } from 'app/app.constants';
         </thead>
         <tbody>
             <tr *ngFor="let sto of stocks">
+                <td>{{sto.e}}</td>
                 <td>{{sto.t}}</td>
                 <td>{{sto.l}}</td> 
                 <td><input type="number"  [(ngModel)]="sto.percentage"  min=1 max=100 step=5 (keyup)="updateTotal(sto)" >
@@ -92,8 +94,8 @@ export class StockComponent {
   private stock: Stock;
   private errorMessage: string;
   private isError: boolean = false;
-  private exchangeNames: string[] =['NSE','BSE'];
-  private exchangeName: string;
+  private exchangeNames: string[] =['NSE','BOM','NYSE'];
+  private exchangeName: string=this.exchangeNames[0];
 
 
 
@@ -185,11 +187,15 @@ export class StockComponent {
 
   private getStock(value: string): void {
 
-      console.log(this.exchangeName);
+      console.log("exchange name"+ this.exchangeName);
+    if(this.exchangeName==""){
+      this.errorMessage="Please Select the Exchange name";
+      this.isError=true;
+    }else{
     
     var tempStock: Stock[] = [];
     this._dataService
-      .GetSingle(value)
+      .GetSingleByExcahngeName(value,this.exchangeName)
       .subscribe((data: Stock[]) => tempStock = data,
       error => console.log(error),
       () => {
@@ -198,6 +204,7 @@ export class StockComponent {
         console.log('Get all Items complete' + tempStock[0].t);
 
       });
+  }
   }
 
   private removeStock(sto: Stock): void {

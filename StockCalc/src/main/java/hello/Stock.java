@@ -45,6 +45,8 @@ private	String id;
 @JsonProperty("ccol")	private    String ccol;
 @JsonProperty("pcls_fix")	private    String pcls_fix;
 
+
+
 public String getId() {
 	return id;
 }
@@ -141,7 +143,7 @@ public String getCp_fix() {
 public void setCp_fix(String cp_fix) {
 	this.cp_fix = cp_fix;
 }
-	
+
 	
 }
 
