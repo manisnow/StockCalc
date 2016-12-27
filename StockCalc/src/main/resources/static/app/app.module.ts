@@ -7,7 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent }  from './app.component';
 import { LoginComponent } from './login.component';
 import { StockComponent } from  './stock.component'; 
-import {RegisterComponent } from '/register.component';
+import { RegisterComponent } from './register.component';
 
 
 const appRoutes: Routes = [
@@ -28,7 +28,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   declarations: [
-    AppComponent,LoginComponent,StockComponent],
+    AppComponent,LoginComponent,StockComponent,RegisterComponent],
   bootstrap: [ AppComponent]
 })
 export class AppModule { }

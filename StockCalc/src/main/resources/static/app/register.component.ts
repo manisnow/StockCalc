@@ -1,35 +1,37 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from 'app/service/user.service';
+import { UserService } from 'app/service/user.service';
 import { User } from 'app/models/user';
+import {AuthenticationService} from 'app/service/authentication.service'
+import { Configuration } from 'app/app.constants';
  
 
 @Component({
-    moduleId: module.id,
-    templateUrl: 'register.component.html'
+   selector: 'register-form',
+   providers: [UserService, AuthenticationService,Configuration],
+   templateUrl: 'app/register.component.html'
 })
  
 export class RegisterComponent {
-    model: any = {};
+   
     loading = false;
  
-    constructor(
-        private router: Router,
-        private userService: UserService,
-        private alertService: AlertService) { }
+   constructor(
+        private _service: AuthenticationService,private _userService: UserService ) {}
  
     register() {
         this.loading = true;
-        this.userService.create(this.model)
+        this. _userService.create(this.model)
             .subscribe(
                 data => {
                     // set success message and pass true paramater to persist the message after redirecting to the login page
-                    this.alertService.success('Registration successful', true);
-                    this.router.navigate(['/login']);
+                   // this.alertService.success('Registration successful', true);
+                    this._service.home();
                 },
                 error => {
-                    this.alertService.error(error);
+                 //   this.alertService.error(error);
                     this.loading = false;
                 });
     }
+  
 }

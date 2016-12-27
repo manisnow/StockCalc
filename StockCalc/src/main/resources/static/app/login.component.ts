@@ -1,5 +1,7 @@
 import {Component, ElementRef} from '@angular/core';
-import {AuthenticationService, User} from 'app/service/authentication.service'
+import {AuthenticationService} from 'app/service/authentication.service'
+import { User}  from 'app/models/user'
+
  
 @Component({
     selector: 'login-form',
@@ -31,7 +33,7 @@ import {AuthenticationService, User} from 'app/service/authentication.service'
                     class="btn waves-effect waves-light" 
                     type="submit" name="action">Login</button>
             </div>
-             <a (click)="register()" href="#">new user register here</a>
+             <a (click)="register()" href="register">new user register here</a>
         </div>
     	`
 })

@@ -23,9 +23,13 @@ export class AuthenticationService {
     this._router.navigate(['login']);
   }
   
-  register(){
-    
+ register() {
+    localStorage.removeItem("user");
     this._router.navigate(['register']);
+  }
+  
+  home() {  
+    this._router.navigate(['home']);
   }
  
   login(user){
