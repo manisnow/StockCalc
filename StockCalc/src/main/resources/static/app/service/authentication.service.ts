@@ -22,6 +22,11 @@ export class AuthenticationService {
     localStorage.removeItem("user");
     this._router.navigate(['login']);
   }
+  
+  register(){
+    
+    this._router.navigate(['register']);
+  }
  
   login(user){
     var authenticatedUser = users.find(u => u.email === user.email);

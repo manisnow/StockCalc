@@ -31,6 +31,7 @@ import {AuthenticationService, User} from 'app/service/authentication.service'
                     class="btn waves-effect waves-light" 
                     type="submit" name="action">Login</button>
             </div>
+             <a (click)="register()" href="#">new user register here</a>
         </div>
     	`
 })
@@ -48,4 +49,9 @@ export class LoginComponent {
             this.errorMsg = 'Failed to login';
         }
     }
+  
+   register() {
+    this._service.register();
+  }
+  
 }
