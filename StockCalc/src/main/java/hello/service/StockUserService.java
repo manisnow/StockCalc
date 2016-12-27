@@ -183,32 +183,7 @@ public class StockUserService {
     }
   }
 
-  /**
-   * Exercises the methods defined in this class.
-   *
-   * <p>Assumes that you are authenticated using the Google Cloud SDK (using
-   * {@code gcloud auth login}).
-   */
-  public static void main(String[] args) throws Exception {
-    StockUserService taskList = new StockUserService();
-    System.out.println("Cloud Datastore Task List");
-    System.out.println();
-    printUsage();
-    while (true) {
-      String commandLine = System.console().readLine("> ");
-      if (commandLine.trim().isEmpty()) {
-        break;
-      }
-      try {
-        taskList.handleCommandLine(commandLine);
-      } catch (IllegalArgumentException e) {
-        System.out.println(e.getMessage());
-        printUsage();
-      }
-    }
-    System.out.println("exiting");
-    System.exit(0);
-  }
+  
 
   private static void printUsage() {
     System.out.println("Usage:");
