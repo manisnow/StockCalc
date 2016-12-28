@@ -18,7 +18,7 @@ import { Configuration } from './app.constants';
                 <div class="content">
                     <span>Congratulations, you have successfully logged in!!</span>
                     <br />
-                    <a (click)="logout()" href="#">Click Here to logout</a>
+                    <a (click)="logout()" >Click Here to logout</a>
               
 
   <h1>Stocks</h1><br>
