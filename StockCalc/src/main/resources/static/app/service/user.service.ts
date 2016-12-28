@@ -32,7 +32,7 @@ private actionUrl: string;
     }
  
     create(user: User) {
-        return this._http.get(this.actionUrl , user).map((response: Response) => response.json());
+        return this._http.post(this.actionUrl , user).map((response: Response) => response.json());
     }
  
     update(user: User) {
