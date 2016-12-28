@@ -1,11 +1,12 @@
 import {Component, ElementRef} from '@angular/core';
-import {AuthenticationService} from 'app/service/authentication.service'
-import { User}  from 'app/models/user'
+import {AuthenticationService} from './service/authentication.service';
+import { UserService } from './service/user.service';
+import { User}  from './models/user';
 
  
 @Component({
     selector: 'login-form',
-    providers: [AuthenticationService],
+    providers: [AuthenticationService,UserService],
     template: `
         <div class="container" >
             <div class="title">
@@ -40,7 +41,7 @@ import { User}  from 'app/models/user'
  
 export class LoginComponent {
  
-    public user = new User('','');
+    public user = new User();
     public errorMsg = '';
  
     constructor(

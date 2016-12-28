@@ -27,7 +27,7 @@ private actionUrl: string;
         return this._http.get(this.actionUrl).map((response: Response) =><User[]> response.json());
     }
  
-    getById(id: number) {
+    getById(id: string) {
         return this._http.get(this.actionUrl + id).map((response: Response) => <User>response.json());
     }
  
@@ -36,10 +36,10 @@ private actionUrl: string;
     }
  
     update(user: User) {
-        return this._http.get(this.actionUrl  + user.id, user).map((response: Response) => response.json());
+        return this._http.get(this.actionUrl  + user.eamilid, user).map((response: Response) => response.json());
     }
  
-    delete(id: number) {
+    delete(id: string) {
         return this._http.get(this.actionUrl + id).map((response: Response) => response.json());
     }
  
