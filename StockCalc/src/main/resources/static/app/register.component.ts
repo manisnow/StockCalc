@@ -11,7 +11,7 @@ import { Configuration } from 'app/app.constants';
 @Component({
    selector: 'register-form',
    providers: [UserService, AuthenticationService,Configuration],
-   templateUrl: 'app/register.component.html'
+   templateUrl: 'app/html/register.component.html'
 })
  
 export class RegisterComponent {

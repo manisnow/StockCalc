@@ -1,6 +1,6 @@
 export class User{
   
-  public eamilid:string;
+  public emailid:string;
   public password:string;
   
   

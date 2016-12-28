@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { CORE_DIRECTIVES } from '@angular/common';
-import { DataService } from 'app/service/dataService';
-import { AuthenticationService } from 'app/service/authentication.service';
-import { Stock } from 'app/models/stock';
-import { Configuration } from 'app/app.constants';
+import { DataService } from './service/dataService';
+import { AuthenticationService } from './service/authentication.service';
+import { Stock } from './models/stock';
+import { Configuration } from './app.constants';
 
 
 
