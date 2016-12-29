@@ -74,7 +74,7 @@ public class StockUserService {
 		 Entity entity=  users.next();
 		 
 		 User user= new User();
-		 user.setEamilid(entity.getString("emailid"));
+		 user.setEmailid(entity.getString("emailid"));
 		 user.setPassword(entity.getString("password"));
 		 
 		  return user;

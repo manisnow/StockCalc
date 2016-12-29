@@ -2,13 +2,13 @@ package hello;
 
 public class User {
     public long id;
-	public String eamilid;
+	public String emailid;
      public String password;
-	public String getEamilid() {
-		return eamilid;
+	public String getEmailid() {
+		return emailid;
 	}
-	public void setEamilid(String eamilid) {
-		this.eamilid = eamilid;
+	public void setEmailid(String emailid) {
+		this.emailid = emailid;
 	}
 	public String getPassword() {
 		return password;

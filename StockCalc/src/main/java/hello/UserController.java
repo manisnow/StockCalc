@@ -42,9 +42,19 @@ public class UserController {
 	
 	@CrossOrigin(origins= "*")
 	@PostMapping("users")
-	public ResponseEntity<User>  addUser(@RequestBody User user) throws JsonParseException, JsonMappingException, IOException {		
-		stockUserService.addUser(user.getEamilid(), user.getPassword());		
-		return new ResponseEntity<User>(user, HttpStatus.OK);	
+	public ResponseEntity  addUser(@RequestBody User user) throws JsonParseException, JsonMappingException, IOException {	
+		System.out.println(user);
+		User founduser=stockUserService.userExists(user.getEmailid());
+			
+	  if(founduser==null){	
+		stockUserService.addUser(user.getEmailid(), user.getPassword());		
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	  }else{
+		  
+		  return new ResponseEntity(String.valueOf("Email Id already exists in the database"), HttpStatus.NOT_ACCEPTABLE);
+	  }
+	  
+	  
     }
 	
 
