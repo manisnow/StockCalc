@@ -33,7 +33,7 @@ public class UserController {
 	//http://finance.google.com/finance/info?client=ig&q=NSE%3ATCS
 	
 	@CrossOrigin(origins= "*")
-	@GetMapping("users/{userName}")
+	@GetMapping("users/{userName:.+}")
     public String getUser(@PathVariable("userName") String userName) throws JsonParseException, JsonMappingException, IOException {
 		
 		System.out.println("username" + userName);
