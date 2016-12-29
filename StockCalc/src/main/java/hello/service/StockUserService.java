@@ -70,7 +70,7 @@ public class StockUserService {
 	  
 	  QueryResults<Entity> users = datastore.run(query);
 	 
-	  System.out.println(query.toString());
+	  System.out.println(query.toString() + users);
 	  if (users.hasNext()) {
 		 Entity entity=  users.next();
 		 
