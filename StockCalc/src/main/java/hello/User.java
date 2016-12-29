@@ -23,4 +23,9 @@ public class User {
 		this.id = id;
 	}
 	
+	public String toString(){
+		
+	return "emailid:"+this.emailid;	
+	}
+	
 }

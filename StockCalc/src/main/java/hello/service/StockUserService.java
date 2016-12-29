@@ -70,14 +70,16 @@ public class StockUserService {
 	  
 	  QueryResults<Entity> users = datastore.run(query);
 	 
+	  System.out.println(query.toString());
 	  if (users.hasNext()) {
 		 Entity entity=  users.next();
 		 
 		 User user= new User();
 		 user.setEmailid(entity.getString("emailid"));
 		 user.setPassword(entity.getString("password"));
-		 
+		 System.out.println(user.toString());
 		  return user;
+		  
 	 
 	  }
 	  
