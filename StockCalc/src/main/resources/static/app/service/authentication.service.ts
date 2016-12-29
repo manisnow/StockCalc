@@ -29,7 +29,8 @@ export class AuthenticationService {
   }
  
   login(user){
- 
+       console.log("login User" + user);
+ console.log("login User" + user.emailid);
   var authenticatedUser=  this._userService.getById(user.emailid);
       console.log("Authenticated User" + authenticatedUser + authenticatedUser.emailid);
     
