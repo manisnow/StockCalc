@@ -31,16 +31,27 @@ export class AuthenticationService {
   login(user){
        console.log("login User" + user);
  console.log("login User" + user.emailid);
-  var authenticatedUser=  this._userService.getById(user.emailid);
-      console.log("Authenticated User" + authenticatedUser + authenticatedUser.emailid);
-    
-   // var authenticatedUser = users.find(u => u.email === user.email);
-    if (authenticatedUser && authenticatedUser.password === user.password){
-      localStorage.setItem("user", authenticatedUser);
+ 
+   this._userService.getById(user.emailid).subscribe(
+    data => {
+        
+      if (data && data.password === user.password){
+      localStorage.setItem("user", data);
       this._router.navigate(['home']);      
       return true;
+    }else{
+      console.log("password did not match");
+      return false;
     }
-    return false;
+
+    },
+    error => {
+      console.log(error);
+    }
+
+
+  );
+      
  
   }
  

@@ -28,6 +28,7 @@ private actionUrl: string;
     }
  
     getById(id: string) {
+          console.log("getByID called: " +  id);
         return this._http.get(this.actionUrl + id).map((response: Response) => <User>response.json());
     }
  
