@@ -36,6 +36,7 @@ public class UserController {
 	@GetMapping("users/{userName}")
     public String getUser(@PathVariable("userName") String userName) throws JsonParseException, JsonMappingException, IOException {
 		
+		System.out.println("username" + userName);
 		 return getJsonFromUser(stockUserService.userExists(userName));
     }
 	
