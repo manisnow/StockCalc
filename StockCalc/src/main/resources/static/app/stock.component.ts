@@ -37,7 +37,7 @@ export class StockComponent {
   private exchangeName: string=this.exchangeNames[0];
   private userStock:UserStock=new UserStock();
   private actionMessage:string="";
-  private userName:string;
+  private userName:string="";
 
 
   logout() {
@@ -51,9 +51,9 @@ export class StockComponent {
 
   ngOnInit() {
     this._service.checkCredentials();
-    userName=localStorage.getItem("user");
+    this.userName=localStorage.getItem("user");
     
-    this.getStockCalc(userName);
+    this.getStockCalc(this.userName);
     
   }
 
