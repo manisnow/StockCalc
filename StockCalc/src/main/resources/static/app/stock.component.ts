@@ -69,6 +69,7 @@ export class StockComponent {
   }
 
   private  saveStockCalc(){
+    console.log("Save  stock called");
 
     this._userStockService.saveUserStock(this.userStock).subscribe(
                 data => { 
