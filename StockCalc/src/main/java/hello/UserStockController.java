@@ -40,7 +40,7 @@ public class UserStockController {
 	
 	
 	@CrossOrigin(origins= "*")
-	@GetMapping("stocks/{emailid}")
+	@GetMapping("stocks/{emailid:.+}")
 	public ResponseEntity retriveStocks(@PathVariable("emailid") String emailid) throws JsonParseException, JsonMappingException, IOException {	
 		 System.out.println("Retrive Stock Started");
 		 UserStock userStock=stockUserService.retriveUserStock(emailid);
