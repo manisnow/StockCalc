@@ -1,65 +1,64 @@
- <div class="container" >
+
 <div class="content">
-                    <span>Congratulations, you have successfully logged in!!</span>
-                    <br />
-                    <a (click)="logout()" >Click Here to logout</a>
-              
+	<span>Congratulations, you have successfully logged in!!</span> <br />
+	<a (click)="logout()">Click Here to logout</a>
 
-  <h1>Stocks</h1><br>
 
-    <div *ngIf="isError"  >       
-     <label > {{errorMsg}} </label> 
-          <button (click)="closeAlert()">Hide</button>   
-          
-        </div>
-        <div *ngIf=!"isError"  >   
-         <label > {{actionMessage}} </label> 
-          <button (click)="closeAlert()">Hide</button>
-         </div>
-        <br>
-      
-      <select  [(ngModel)]="exchangeName">
-        <option *ngFor="let value of exchangeNames" [ngValue]="value">{{value}}</option>
-      </select>
-      
-  
-        <label>Investment</label> &nbsp; <input #investTextBox type="number"  [(ngModel)] = "userStock.invAmt"    min=1 max=9999999999 step=5><br><br>
-        <input #textbox type="text" [(ngModel)] ="textValue" (keyup)="onKey($event,textbox.value)">       
-        <button (click)="getStock(textbox.value)">get Stocks</button>       
-        <button (click)="clearTextArea()">Clear</button> 
-        
-        <table>
-        <thead>
-            <th>Excahnge</th>
-            <th>Stock Name</th>
-            <th>Stock Price</th>
-            <th>Percentage</th>
-            <th>quantity</th>
-            <th>Total Amt </th>
-            <th> Action</th>
-        </thead>
-        <tbody>
-            <tr *ngFor="let sto of userStock.stocks">
-                <td>{{sto.e}}</td>
-                <td>{{sto.t}}</td>
-                <td>{{sto.l}}</td> 
-                <td><input type="number"  [(ngModel)]="sto.percentage"  min=1 max=100 step=5 (keyup)="updateTotal(sto)" >
-         
-                     </td>
+	<h1>Stocks</h1>
+	<br>
+
+	<div *ngIf="isError">
+		<label> {{errorMsg}} </label>
+		<button (click)="closeAlert()">Hide</button>
+	</div>
+	<div *ngIf=!"isError"  >
+		<label> {{actionMessage}} </label>
+		<button (click)="closeAlert()">Hide</button>
+	</div>
+	<br> <select [(ngModel)]="exchangeName">
+		<option *ngFor="let value of exchangeNames" [ngValue]="value">{{value}}</option>
+	</select> <label>Investment</label> &nbsp; <input #investTextBox type="number"
+		[(ngModel)] ="userStock.invAmt" min=1 max=9999999999 step=5><br>
+	<br> <input #textbox type="text" [(ngModel)] ="textValue"
+		(keyup)="onKey($event,textbox.value)">
+	<button (click)="getStock(textbox.value)">get Stocks</button>
+	<button (click)="clearTextArea()">Clear</button>
+
+	<table>
+		<thead>
+			<th>Excahnge</th>
+			<th>Stock Name</th>
+			<th>Stock Price</th>
+			<th>Percentage</th>
+			<th>quantity</th>
+			<th>Total Amt</th>
+			<th>Action</th>
+		</thead>
+		<tbody>
+			<tr *ngFor="let sto of userStock.stocks">
+				<td>{{sto.e}}</td>
+				<td>{{sto.t}}</td>
+				<td>{{sto.l}}</td>
+				<td><input type="number" [(ngModel)]="sto.percentage" min=1
+					max=100 step=5 (keyup)="updateTotal(sto)"></td>
 
 
 
-                <td>{{sto.qty}} </td>
-                 <td>{{sto.totalAmt}} </td>
-                <td> <button (click)="removeStock(sto)">Remove</button> </td>
-            </tr>
-        </tbody>
-    </table>
+				<td>{{sto.qty}}</td>
+				<td>{{sto.totalAmt}}</td>
+				<td>
+					<button (click)="removeStock(sto)">Remove</button>
+				</td>
+			</tr>
+			<tr *ngIf="userStock.stocks != null && userStock.stocks.length > 0 ">
+				<td colspan="5">
+					<button (click)="saveStockCalc()">Save</button>
+				</td>
+			</tr>
 
-  
-        <button (click)="saveStockCalc()">Save</button>
-   
+		</tbody>
+	</table>
+
+
+
 </div>
-</div>
-
-           
