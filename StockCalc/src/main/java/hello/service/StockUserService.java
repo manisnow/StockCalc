@@ -131,7 +131,7 @@ public class StockUserService {
 					.setFilter(
 							PropertyFilter.eq("emailid", userStock.getEmailid()))
 					.build();
-			QueryResults<Entity> stocksE = datastore.run(query);
+			QueryResults<Entity> stocksE = datastore.run(query1);
 
 			Stock stocks[] = getStocks(stocksE);
 			userStock.setStocks(stocks);

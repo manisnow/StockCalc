@@ -47,7 +47,7 @@ public class UserStockController {
 		 System.out.println("Retrive Stock ended");
 		 
 		  
-		 return new ResponseEntity(userStock,  HttpStatus.OK);
+		 return new ResponseEntity<UserStock>(userStock,  HttpStatus.OK);
 	  
     }
 	
