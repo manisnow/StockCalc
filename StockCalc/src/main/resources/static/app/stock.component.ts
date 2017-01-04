@@ -52,7 +52,7 @@ export class StockComponent {
 
   ngOnInit() {
     this._service.checkCredentials();
-    this.userName=this._userService.getUser().emailid;    
+    this.userName=this._userService.emailid;    
     this.getStockCalc(this.userName);
     
   }
@@ -75,7 +75,7 @@ export class StockComponent {
   this.userStock.emailid=this.userName;
  console.log("Save  stock called" + this.userStock.emailid);
     this._userStockService.saveUserStock(this.userStock).subscribe(
-                data => { 
+                data => { np
                   this.actionMessage="Stocks Saved";
                 },
                 error => {
