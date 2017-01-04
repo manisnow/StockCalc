@@ -44,6 +44,7 @@ private	String id;
 @JsonProperty("cp_fix")	private    String cp_fix;
 @JsonProperty("ccol")	private    String ccol;
 @JsonProperty("pcls_fix")	private    String pcls_fix;
+@JsonProperty("percentage") private long percentage;
 
 
 
@@ -142,6 +143,12 @@ public String getCp_fix() {
 }
 public void setCp_fix(String cp_fix) {
 	this.cp_fix = cp_fix;
+}
+public long getPercentage() {
+	return percentage;
+}
+public void setPercentage(long percentage) {
+	this.percentage = percentage;
 }
 
 	

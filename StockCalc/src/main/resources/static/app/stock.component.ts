@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { CORE_DIRECTIVES } from '@angular/common';
 import { DataService } from './service/dataService';
+import { UserStockService } from './service/userstock.service';
 import { AuthenticationService } from './service/authentication.service';
 import { Stock } from './models/stock';
+import { User } from './models/user';
+import { UserStock } from './models/userStock';
 import { Configuration } from './app.constants';
 
 
@@ -10,71 +13,9 @@ import { Configuration } from './app.constants';
 
 @Component({
   selector: 'stock-form',
-  providers: [DataService, AuthenticationService, Configuration],
-  template: `
-
-
-  <div class="container" >
-                <div class="content">
-                    <span>Congratulations, you have successfully logged in!!</span>
-                    <br />
-                    <a (click)="logout()" >Click Here to logout</a>
-              
-
-  <h1>Stocks</h1><br>
-
-    <div *ngIf="isError"  >       
-  <label > {{errorMessage}} </label> 
-          <button (click)="closeAlert()">Hide</button>   
-          
-        </div><br>
-      
-      <select  [(ngModel)]="exchangeName">
-        <option *ngFor="let value of exchangeNames" [ngValue]="value">{{value}}</option>
-      </select>
-      
-  
-        <label>Investment</label> &nbsp; <input #investTextBox type="number"  [(ngModel)] = "investTextValue"    min=1 max=9999999999 step=5><br><br>
-        <input #textbox type="text" [(ngModel)] ="textValue" (keyup)="onKey($event,textbox.value)">       
-        <button (click)="getStock(textbox.value)">get Stocks</button>       
-        <button (click)="clearTextArea()">Clear</button> 
-        
-        <table>
-        <thead>
-            <th>Excahnge</th>
-            <th>Stock Name</th>
-            <th>Stock Price</th>
-            <th>Percentage</th>
-            <th>quantity</th>
-            <th>Total Amt </th>
-            <th> Action</th>
-        </thead>
-        <tbody>
-            <tr *ngFor="let sto of stocks">
-                <td>{{sto.e}}</td>
-                <td>{{sto.t}}</td>
-                <td>{{sto.l}}</td> 
-                <td><input type="number"  [(ngModel)]="sto.percentage"  min=1 max=100 step=5 (keyup)="updateTotal(sto)" >
-         
-                     </td>
-
-
-
-                <td>{{sto.qty}} </td>
-                 <td>{{sto.totalAmt}} </td>
-                <td> <button (click)="removeStock(sto)">Remove</button> </td>
-            </tr>
-        </tbody>
-    </table>
-        <table id="displayTable" > </table>
-        </div>
-            </div>
-        `,
+  providers: [UserStockService,DataService, AuthenticationService, Configuration],
+  templateUrl: 'app/html/stocksCalc.html',
   directives: [CORE_DIRECTIVES]
-
-
-
-
 })
 export class StockComponent {
 
@@ -86,18 +27,16 @@ export class StockComponent {
     stock.setL_cur("&#8377;2,299.80");
     stock.setS("0");
     stock.setLtt("3:48PM GMT+5:30");*/
-  private textValue = "";
-  private textAreaValue = "";
+  private textValue = "";  
   private investTextValue = "";
   private stocksArray: Array<string> = new Array<string>();
-  private stocks: Stock[] = [];
   private stock: Stock;
-  private errorMessage: string;
+  private errorMsg: string;
   private isError: boolean = false;
   private exchangeNames: string[] =['NSE','BOM','NYSE'];
   private exchangeName: string=this.exchangeNames[0];
-
-
+  private userStock:UserStock=new UserStock();
+  private actionMessage:string="";
 
 
   logout() {
@@ -105,17 +44,19 @@ export class StockComponent {
   }
 
 
-  constructor(private _dataService: DataService, private _service: AuthenticationService) {
+  constructor(private _dataService:DataService,private _userStockService: UserStockService, private _service: AuthenticationService) {
 
   }
 
   ngOnInit() {
     this._service.checkCredentials();
+    var user=localStorage.getItem("user");
+    this.getStockCalc(user);
   }
 
   
  
-   private selectExchange(value:string) {
+  private selectExchange(value:string) {
     this.exchangeName = value;
   }
   
@@ -124,15 +65,40 @@ export class StockComponent {
   }
 
   private updateStock(value: string) {
-    this.stocksArray.push(value);
-    this.textAreaValue = this.stocksArray.join("\n");
+    this.stocksArray.push(value);    
+  }
+
+  private  saveStockCalc(){
+
+    this._userStockService.saveUserStock(this.userStock).subscribe(
+                data => { 
+                  this.actionMessage="Stocks Saved";
+                },
+                error => {
+                 this.isError=true;
+                 this.errorMsg=error;
+                });
+   
+  }
+
+  private  getStockCalc(emailid:string){
+
+    this._userStockService.GetSingle(emailid).subscribe(
+                data => { 
+                  this.userStock=data;
+                  this.actionMessage="Stocks Fetched";
+                },
+                error => {
+                 this.isError=true;
+                 this.errorMsg=error;
+                });
+   
   }
 
 
 
   private clearTextArea() {
-    this.stocksArray = [];
-    this.textAreaValue = this.stocksArray;
+    this.stocksArray = [];    
   }
 
 
@@ -141,21 +107,21 @@ export class StockComponent {
     if (this.getTotalStockPercentage() > 100) {
 
       sto.percentage = 0;
-      this.errorMessage = "Total Percentage can not bemore than 100 %";
+      this.errorMsg = "Total Percentage can not bemore than 100 %";
       this.isError = true;
     } else {
       
     
     console.log("Percentage" + sto.percentage);
     console.log("Percentage" + (sto.percentage / 100));
-    console.log("Percentage" + (this.investTextValue * (sto.percentage / 100)));
-    console.log("Percentage" + ((this.investTextValue * (sto.percentage / 100)) / sto.l));
-    if (this.investTextValue == "") {
-      this.errorMessage = "Please Enter the Investment Amount";
+    console.log("Percentage" + (this.userStock.invAmt * (sto.percentage / 100)));
+    console.log("Percentage" + ((this.userStock.invAmt * (sto.percentage / 100)) / sto.l));
+    if (this.userStock.invAmt == 0) {
+      this.errorMsg = "Please Enter the Investment Amount";
       this.isError = true;
     } else {
 
-      sto.qty = Math.floor((this.investTextValue * (sto.percentage / 100)) / sto.l_fix);
+      sto.qty = Math.floor((this.userStock.invAmt * (sto.percentage / 100)) / sto.l_fix);
       sto.totalAmt = sto.qty * sto.l_fix;
      }
       
@@ -176,7 +142,7 @@ export class StockComponent {
   private getTotalStockPercentage(): number {
     var percentage: number = 0;
 
-    for (let sto of this.stocks) {
+    for (let sto of this.userStock.stocks) {
       percentage += sto.percentage;
     }
 
@@ -189,7 +155,7 @@ export class StockComponent {
 
       console.log("exchange name"+ this.exchangeName);
     if(this.exchangeName==""){
-      this.errorMessage="Please Select the Exchange name";
+      this.errorMsg="Please Select the Exchange name";
       this.isError=true;
     }else{
     
@@ -200,7 +166,7 @@ export class StockComponent {
       error => console.log(error),
       () => {
 
-        this.stocks.push(tempStock[0]);
+        this.userStock.stocks.push(tempStock[0]);
         console.log('Get all Items complete' + tempStock[0].t);
 
       });
@@ -210,9 +176,9 @@ export class StockComponent {
   private removeStock(sto: Stock): void {
 
 
-    var index = this.stocks.indexOf(sto, 0);
+    var index = this.userStock.stocks.indexOf(sto, 0);
     if (index > -1) {
-      this.stocks.splice(index, 1);
+      this.userStock.stocks.splice(index, 1);
     }
 
 
