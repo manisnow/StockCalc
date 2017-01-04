@@ -52,7 +52,7 @@ export class StockComponent {
 
   ngOnInit() {
     this._service.checkCredentials();
-    this.userName=this._userService.emailid;    
+    this.userName=this._userService.user.emailid;    
     this.getStockCalc(this.userName);
     
   }

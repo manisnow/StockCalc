@@ -38,7 +38,7 @@ export class AuthenticationService {
       if (data && data.password === user.password){
         
       console.log(user.emailid);
-        this._userService.setUser(user);
+        this._userService.user=user;
       localStorage.setItem("user", data.emailid);
       console.log("localstorage" +  localStorage.getItem("user"));
       this._router.navigate(['home']);      
