@@ -37,6 +37,7 @@ export class StockComponent {
   private exchangeName: string=this.exchangeNames[0];
   private userStock:UserStock=new UserStock();
   private actionMessage:string="";
+  private userName:string;
 
 
   logout() {
@@ -50,8 +51,10 @@ export class StockComponent {
 
   ngOnInit() {
     this._service.checkCredentials();
-    var user=localStorage.getItem("user");
-    this.getStockCalc(user);
+    userName=localStorage.getItem("user");
+    
+    this.getStockCalc(userName);
+    
   }
 
   
@@ -69,8 +72,9 @@ export class StockComponent {
   }
 
   private  saveStockCalc(){
-    console.log("Save  stock called");
-
+   
+    this.userStock.emailid=this.userName;
+ console.log("Save  stock called" + this.userStock.emailid);
     this._userStockService.saveUserStock(this.userStock).subscribe(
                 data => { 
                   this.actionMessage="Stocks Saved";

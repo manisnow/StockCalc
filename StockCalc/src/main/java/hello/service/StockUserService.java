@@ -73,6 +73,8 @@ public class StockUserService {
 	}
 
 	public Key insertOrUpdateUserStock(UserStock userStock) {
+		
+		System.out.println("inside insertOrUpdateUserStock " +  userStock.getEmailid() );
 
 		Query<Entity> query = Query
 				.newEntityQueryBuilder()
