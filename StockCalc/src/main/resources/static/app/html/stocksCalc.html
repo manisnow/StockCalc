@@ -11,7 +11,7 @@
 		<label> {{errorMsg}} </label>
 		<button (click)="closeAlert()">Hide</button>
 	</div>
-	<div *ngIf=!"isError"  >
+	<div *ngIf="!isError"  >
 		<label> {{actionMessage}} </label>
 		<button (click)="closeAlert()">Hide</button>
 	</div>
@@ -50,13 +50,13 @@
 					<button (click)="removeStock(sto)">Remove</button>
 				</td>
 			</tr>
-			<tr *ngIf="userStock.stocks != null && userStock.stocks.length > 0 ">
+			<tr >
 				<td colspan="5">
 					<button (click)="saveStockCalc()">Save</button>
 				</td>
 			</tr>
 
 		</tbody>
-	</table>
+	</table></div>
 	
 	
