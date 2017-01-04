@@ -9,7 +9,6 @@ import { LoginComponent } from './login.component';
 import { StockComponent } from  './stock.component'; 
 import { RegisterComponent } from './register.component';
 import { UserService } from './service/user.service';
-import { UserStockService } from './service/userstock.service';
 import { Configuration } from './app.constants';
 
 
@@ -33,7 +32,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,LoginComponent,StockComponent,RegisterComponent],
   bootstrap: [ AppComponent],
-  providers:    [ UserService ,UserStockService,Configuration]
+  providers:    [ UserService ,Configuration]
 })
 export class AppModule { }
 
