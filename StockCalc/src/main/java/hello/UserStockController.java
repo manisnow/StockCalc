@@ -31,7 +31,7 @@ public class UserStockController {
 	@CrossOrigin(origins= "*")
 	@PostMapping("stocks")
 	public ResponseEntity  saveStocks(@RequestBody UserStock userStock) throws JsonParseException, JsonMappingException, IOException {	
-		System.out.println(userStock);
+		System.out.println("userStock"+ userStock.getEmailid() );
 		stockUserService.insertOrUpdateUserStock(userStock);
 		  
 		 return new ResponseEntity(String.valueOf("Stocks saved into database"),  HttpStatus.OK);

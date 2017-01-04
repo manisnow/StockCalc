@@ -85,11 +85,12 @@ public class StockUserService {
 		System.out.println(query.toString() + users);
 		if (users.hasNext()) {
 			Entity userE = users.next();
-
+		
 			Key key = keyFactory.newKey(userE.getLong("id"));
 			Entity userEntity = Entity.newBuilder(key)
 					.set("invAmt", userStock.getInvAmt()).build();
 			datastore.update(userEntity);
+			System.out.println("updated"  + userEntity);
 			// Entity userStockE =new Entity
 
 			Query<Entity> query1 = Query
