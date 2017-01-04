@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CORE_DIRECTIVES } from '@angular/common';
 import { DataService } from './service/dataService';
 import { UserStockService } from './service/userstock.service';
+import { UserService } from './service/user.service';
 import { AuthenticationService } from './service/authentication.service';
 import { Stock } from './models/stock';
 import { User } from './models/user';
@@ -13,7 +14,7 @@ import { Configuration } from './app.constants';
 
 @Component({
   selector: 'stock-form',
-  providers: [UserStockService,DataService, AuthenticationService, Configuration],
+  providers: [UserStockService,DataService,UserService, AuthenticationService, Configuration],
   templateUrl: 'app/html/stocksCalc.html',
   directives: [CORE_DIRECTIVES]
 })
@@ -45,14 +46,13 @@ export class StockComponent {
   }
 
 
-  constructor(private _dataService:DataService,private _userStockService: UserStockService, private _service: AuthenticationService) {
+  constructor(private _dataService:DataService,private _userService:UserService,private _userStockService: UserStockService, private _service: AuthenticationService) {
 
   }
 
   ngOnInit() {
     this._service.checkCredentials();
-    this.userName=localStorage.getItem("user");
-    
+    this.userName=this._userService.getUser().emailid;    
     this.getStockCalc(this.userName);
     
   }
@@ -71,9 +71,8 @@ export class StockComponent {
     this.stocksArray.push(value);    
   }
 
-  private  saveStockCalc(){
-   
-    this.userStock.emailid=this.userName;
+  private  saveStockCalc(){   
+  this.userStock.emailid=this.userName;
  console.log("Save  stock called" + this.userStock.emailid);
     this._userStockService.saveUserStock(this.userStock).subscribe(
                 data => { 
