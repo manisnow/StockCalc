@@ -151,6 +151,18 @@ public void setPercentage(long percentage) {
 	this.percentage = percentage;
 }
 
+
+@Override
+public String toString() {
+	return "Stock [id=" + id + ", t=" + t + ", e=" + e + ", l=" + l
+			+ ", l_fix=" + l_fix + ", l_cur=" + l_cur + ", s=" + s + ", ltt="
+			+ ltt + ", lt=" + lt + ", lt_dts=" + lt_dts + ", c=" + c
+			+ ", c_fix=" + c_fix + ", cp=" + cp + ", cp_fix=" + cp_fix
+			+ ", ccol=" + ccol + ", pcls_fix=" + pcls_fix + ", percentage="
+			+ percentage + "]";
+}
+
+
 	
 }
 

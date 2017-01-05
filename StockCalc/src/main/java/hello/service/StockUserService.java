@@ -16,6 +16,7 @@ import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.DateTime;
 import com.google.cloud.datastore.Entity;
 import com.google.cloud.datastore.Key;
+import com.google.cloud.datastore.Entity.Builder;
 import com.google.cloud.datastore.KeyFactory;
 import com.google.cloud.datastore.LongValue;
 import com.google.cloud.datastore.Query;
@@ -148,63 +149,74 @@ public class StockUserService {
 	}
 
 	private void addStocks(Stock[] stocks, String emailid) {
+		
+		
 
 		for (Stock stock : stocks) {
+			
+			System.out.println(""+stock);
 
 			Key key = datastore.allocateId(keyFactory1.newKey());
-			Entity user = Entity
-					.newBuilder(key)
-					.set("emailid", emailid)
-					.set("c",
-							stock.getC())
-									
-					.set("c_fix",
-							stock.getC_fix())
-									
-					.set("ccol",
-							stock.getCcol())
-									
-					.set("cp",
-							stock.getCp())
-									
-					.set("cp_fix",
-							stock.getCp_fix())
-									
-					.set("e",
-							stock.getE())
-									
-					.set("l",
-							stock.getL())
-									
-					.set("l_cur",
-							stock.getL_cur())
-									
-					.set("l_fix",
-							stock.getL_fix())
-									
-					.set("lt",
-							stock.getLt())
-									
-					.set("lt_dts",
-							stock.getLt_dts())
-									
-					.set("ltt",
-							stock.getLtt())
-									
-					.set("pcls_fix",
-							stock.getPcls_fix())
-									
-					.set("s",
-							stock.getS())
-									
-					.set("t",
-							stock.getT())
-									
-					.set("percentage",
+			Builder stockBuilder=Entity
+					.newBuilder(key);
+			
+			
+			
+			//Entity user = Entity
+					//.newBuilder(key)
+					
+			stockBuilder=stockBuilder.set("emailid", emailid);
+			
+			        if(stock.getC()!=null)
+					stockBuilder=stockBuilder.set("c",stock.getC());
+			        if(stock.getC_fix()!=null)				
+					stockBuilder=stockBuilder.set("c_fix",
+							stock.getC_fix());
+			        if(stock.getCcol()!=null)				
+					stockBuilder=stockBuilder.set("ccol",
+							stock.getCcol());
+			        if(stock.getCp()!=null)				
+					stockBuilder=stockBuilder.set("cp",
+							stock.getCp());
+			        if(stock.getCp_fix()!=null)				
+					stockBuilder=stockBuilder.set("cp_fix",
+							stock.getCp_fix());
+			        if(stock.getE()!=null)				
+					stockBuilder=stockBuilder.set("e",
+							stock.getE());
+			        if(stock.getL()!=null)				
+					stockBuilder=stockBuilder.set("l",
+							stock.getL());
+			        if(stock.getL_cur()!=null)				
+					stockBuilder=stockBuilder.set("l_cur",
+							stock.getL_cur());
+			        if(stock.getL_fix()!=null)				
+					stockBuilder=stockBuilder.set("l_fix",
+							stock.getL_fix());
+			        if(stock.getLt()!=null)				
+					stockBuilder=stockBuilder.set("lt",
+							stock.getLt());
+			        if(stock.getLt_dts()!=null)				
+					stockBuilder=stockBuilder.set("lt_dts",
+							stock.getLt_dts());
+			        if(stock.getLtt()!=null)				
+					stockBuilder=stockBuilder.set("ltt",
+							stock.getLtt());
+			        if(stock.getPcls_fix()!=null)				
+					stockBuilder=stockBuilder.set("pcls_fix",
+							stock.getPcls_fix());
+			        if(stock.getS()!=null)				
+					stockBuilder=stockBuilder.set("s",
+							stock.getS());
+			        if(stock.getT()!=null)				
+					stockBuilder=stockBuilder.set("t",
+							stock.getT());
+			      	
+					stockBuilder=stockBuilder.set("percentage",
 							(stock.getPercentage())
-									)
+									);
 
-					.set("dateCreated", DateTime.now()).build();
+					Entity user=stockBuilder.set("dateCreated", DateTime.now()).build();
 			datastore.put(user);
 		}
 
