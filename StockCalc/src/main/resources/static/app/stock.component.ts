@@ -52,8 +52,10 @@ export class StockComponent {
 
   ngOnInit() {
     this._service.checkCredentials();
-    var data=JSON.parse(localStorage.getItem("user"));
-    this.userName=data.emailid;    
+    var user=JSON.parse(localStorage.getItem("user"));
+    alert(user);
+    console.log(user);
+    this.userName=user.emailid;    
     this.getStockCalc(this.userName);
     
   }

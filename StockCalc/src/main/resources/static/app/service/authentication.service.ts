@@ -41,6 +41,7 @@ export class AuthenticationService {
        
       localStorage.setItem("user", JSON.stringify(data));
       console.log("localstorage" +  JSON.parse(localStorage.getItem("user")));
+       alert(JSON.parse(localStorage.getItem("user"))+ "---"+JSON.stringify(data));
       this._router.navigate(['home']);      
       return true;
     }else{
