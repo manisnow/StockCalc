@@ -86,7 +86,7 @@ public class StockUserService {
 		if (users.hasNext()) {
 			Entity userE = users.next();
 		
-			Key key = keyFactory.newKey(userE.getLong("id"));
+			Key key = keyFactory.newKey(userE.getKey().getId());
 			Entity userEntity = Entity.newBuilder(key)
 					.set("invAmt", userStock.getInvAmt()).build();
 			datastore.update(userEntity);
@@ -99,7 +99,7 @@ public class StockUserService {
 					.setFilter(
 							PropertyFilter.eq("emailid", userStock.getEmailid()))
 					.build();
-			QueryResults<Entity> stocksE = datastore.run(query);
+			QueryResults<Entity> stocksE = datastore.run(query1);
 			while (stocksE.hasNext()) {
 
 				datastore.delete(stocksE.next().getKey());
