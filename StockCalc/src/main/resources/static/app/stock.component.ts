@@ -42,6 +42,7 @@ export class StockComponent {
 
 
   logout() {
+    alert("logout called");
     this._service.logout();
   }
 
@@ -51,12 +52,8 @@ export class StockComponent {
   }
 
   ngOnInit() {
-    this._service.checkCredentials();
-    var user=JSON.parse(localStorage.getItem("user"));
-    alert(user);
-    console.log(user);
-    this.userName=user.emailid;    
-    this.getStockCalc(this.userName);
+    this._service.checkCredentials(this);
+   
     
   }
 
@@ -78,7 +75,7 @@ export class StockComponent {
   this.userStock.emailid=this.userName;
  console.log("Save  stock called" + this.userStock.emailid);
     this._userStockService.saveUserStock(this.userStock).subscribe(
-                data => { np
+                data => { 
                   this.actionMessage="Stocks Saved";
                 },
                 error => {
@@ -88,7 +85,8 @@ export class StockComponent {
    
   }
 
-  private  getStockCalc(emailid:string){
+  public  getStockCalc(emailid:string){
+    this.userName=emailid;
 
     this._userStockService.GetSingle(emailid).subscribe(
                 data => { 

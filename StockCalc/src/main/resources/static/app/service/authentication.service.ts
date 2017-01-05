@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import { User } from '../models/user';
 import { UserService } from './user.service';
+import { StockComponent } from '../stock.component';
 
  
 /*var users = [
@@ -60,9 +61,16 @@ export class AuthenticationService {
  
   }
  
-   checkCredentials(){
+   checkCredentials(stockC:StockComponent){
+     alert("checking credntial"+ localStorage.getItem("user")+" ----"+JSON.parse(localStorage.getItem("user")));
     if (localStorage.getItem("user") === null){
         this._router.navigate(['login']);
+    }else{
+    var user=JSON.parse(localStorage.getItem("user"));
+    alert(user+  localStorage.getItem("user"));
+    console.log(user);
+    //this.userName=user.emailid;    
+    stockC.getStockCalc(user.emailid);
     }
   } 
 }
