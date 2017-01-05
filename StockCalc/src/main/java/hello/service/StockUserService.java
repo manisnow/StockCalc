@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.cloud.datastore.Datastore;
@@ -88,7 +87,10 @@ public class StockUserService {
 		
 			Key key = keyFactory.newKey(userE.getKey().getId());
 			Entity userEntity = Entity.newBuilder(key)
-					.set("invAmt", userStock.getInvAmt()).build();
+					.set("invAmt", userStock.getInvAmt())
+					.set("emailid",userE.getString("emailid"))
+					.set("password",userE.getString("password")).build();
+			
 			datastore.update(userEntity);
 			System.out.println("updated"  + userEntity);
 			// Entity userStockE =new Entity
@@ -125,7 +127,7 @@ public class StockUserService {
 			Entity userE = users.next();
 
 			userStock.setEmailid(emailid);
-			userStock.setId(userE.getLong("id"));
+			userStock.setId(userE.getKey().getId());
 			userStock.setInvAmt(userE.getLong("invAmt"));
 
 			Query<Entity> query1 = Query
@@ -152,55 +154,55 @@ public class StockUserService {
 			Key key = datastore.allocateId(keyFactory1.newKey());
 			Entity user = Entity
 					.newBuilder(key)
-					.set("emailid", StringValue.newBuilder(emailid).build())
+					.set("emailid", emailid)
 					.set("c",
-							StringValue.newBuilder(stock.getC())
-									.setExcludeFromIndexes(true).build())
+							stock.getC())
+									
 					.set("c_fix",
-							StringValue.newBuilder(stock.getC_fix())
-									.setExcludeFromIndexes(true).build())
+							stock.getC_fix())
+									
 					.set("ccol",
-							StringValue.newBuilder(stock.getCcol())
-									.setExcludeFromIndexes(true).build())
+							stock.getCcol())
+									
 					.set("cp",
-							StringValue.newBuilder(stock.getCp())
-									.setExcludeFromIndexes(true).build())
+							stock.getCp())
+									
 					.set("cp_fix",
-							StringValue.newBuilder(stock.getCp_fix())
-									.setExcludeFromIndexes(true).build())
+							stock.getCp_fix())
+									
 					.set("e",
-							StringValue.newBuilder(stock.getE())
-									.setExcludeFromIndexes(true).build())
+							stock.getE())
+									
 					.set("l",
-							StringValue.newBuilder(stock.getL())
-									.setExcludeFromIndexes(true).build())
+							stock.getL())
+									
 					.set("l_cur",
-							StringValue.newBuilder(stock.getL_cur())
-									.setExcludeFromIndexes(true).build())
+							stock.getL_cur())
+									
 					.set("l_fix",
-							StringValue.newBuilder(stock.getL_fix())
-									.setExcludeFromIndexes(true).build())
+							stock.getL_fix())
+									
 					.set("lt",
-							StringValue.newBuilder(stock.getLt())
-									.setExcludeFromIndexes(true).build())
+							stock.getLt())
+									
 					.set("lt_dts",
-							StringValue.newBuilder(stock.getLt_dts())
-									.setExcludeFromIndexes(true).build())
+							stock.getLt_dts())
+									
 					.set("ltt",
-							StringValue.newBuilder(stock.getLtt())
-									.setExcludeFromIndexes(true).build())
+							stock.getLtt())
+									
 					.set("pcls_fix",
-							StringValue.newBuilder(stock.getPcls_fix())
-									.setExcludeFromIndexes(true).build())
+							stock.getPcls_fix())
+									
 					.set("s",
-							StringValue.newBuilder(stock.getS())
-									.setExcludeFromIndexes(true).build())
+							stock.getS())
+									
 					.set("t",
-							StringValue.newBuilder(stock.getT())
-									.setExcludeFromIndexes(true).build())
+							stock.getT())
+									
 					.set("percentage",
-							LongValue.newBuilder(stock.getPercentage())
-									.setExcludeFromIndexes(true).build())
+							(stock.getPercentage())
+									)
 
 					.set("dateCreated", DateTime.now()).build();
 			datastore.put(user);
