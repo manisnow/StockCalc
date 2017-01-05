@@ -80,7 +80,7 @@ export class StockComponent {
                 },
                 error => {
                  this.isError=true;
-                 this.errorMsg=JSON.parse(error);
+                 this.errorMsg=error;
                 });
    
   }
@@ -95,7 +95,7 @@ export class StockComponent {
                 },
                 error => {
                  this.isError=true;
-                 this.errorMsg=JSON.parse(error);
+                 this.errorMsg=error;
                 });
    
   }
