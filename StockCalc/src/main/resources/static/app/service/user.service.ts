@@ -11,8 +11,7 @@ import { Configuration } from '../app.constants';
 export class UserService {
 private actionUrl: string;
     private headers: Headers;
-    private user:User;
-
+   
     constructor(private _http:Http,private _configuration:Configuration ) {
 
         this.actionUrl = _configuration.ServerWithApiUrl + 'users/';
@@ -23,13 +22,6 @@ private actionUrl: string;
  
  
 
-    getUser(){
-     return this.user;  
-    }
-  
-    setUser(user:User){
-      this.user=user;
-  }
     getAll() {
         return this._http.get(this.actionUrl).map((response: Response) =><User[]> response.json());
     }

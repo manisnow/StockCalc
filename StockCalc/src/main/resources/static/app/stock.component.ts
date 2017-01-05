@@ -52,7 +52,8 @@ export class StockComponent {
 
   ngOnInit() {
     this._service.checkCredentials();
-    this.userName=this._userService.user.emailid;    
+    var data=JSON.parse(localStorage.getItem("user"));
+    this.userName=data.emailid;    
     this.getStockCalc(this.userName);
     
   }
@@ -80,7 +81,7 @@ export class StockComponent {
                 },
                 error => {
                  this.isError=true;
-                 this.errorMsg=error;
+                 this.errorMsg=JSON.parse(error);
                 });
    
   }
@@ -94,7 +95,7 @@ export class StockComponent {
                 },
                 error => {
                  this.isError=true;
-                 this.errorMsg=error;
+                 this.errorMsg=JSON.parse(error);
                 });
    
   }
