@@ -169,49 +169,79 @@ public class StockUserService {
 			
 			        if(stock.getC()!=null)
 					stockBuilder=stockBuilder.set("c",stock.getC());
+			        else
+			        	stockBuilder=stockBuilder.setNull("c");
 			        if(stock.getC_fix()!=null)				
 					stockBuilder=stockBuilder.set("c_fix",
 							stock.getC_fix());
+			        else
+			        	stockBuilder=stockBuilder.setNull("c_fix");
 			        if(stock.getCcol()!=null)				
 					stockBuilder=stockBuilder.set("ccol",
 							stock.getCcol());
+			        else
+			        	stockBuilder=stockBuilder.setNull("ccol");
 			        if(stock.getCp()!=null)				
 					stockBuilder=stockBuilder.set("cp",
 							stock.getCp());
+			        else
+			        	stockBuilder=stockBuilder.setNull("cp");
 			        if(stock.getCp_fix()!=null)				
 					stockBuilder=stockBuilder.set("cp_fix",
 							stock.getCp_fix());
+			        else
+			        	stockBuilder=stockBuilder.setNull("cp_fix");
 			        if(stock.getE()!=null)				
 					stockBuilder=stockBuilder.set("e",
 							stock.getE());
+			        else
+			        	stockBuilder=stockBuilder.setNull("e");
 			        if(stock.getL()!=null)				
 					stockBuilder=stockBuilder.set("l",
 							stock.getL());
+			        else
+			        	stockBuilder=stockBuilder.setNull("l");
 			        if(stock.getL_cur()!=null)				
 					stockBuilder=stockBuilder.set("l_cur",
 							stock.getL_cur());
+			        else
+			        	stockBuilder=stockBuilder.setNull("l_cur");
 			        if(stock.getL_fix()!=null)				
 					stockBuilder=stockBuilder.set("l_fix",
 							stock.getL_fix());
+			        else
+			        	stockBuilder=stockBuilder.setNull("l_fix");
 			        if(stock.getLt()!=null)				
 					stockBuilder=stockBuilder.set("lt",
 							stock.getLt());
+			        else
+			        	stockBuilder=stockBuilder.setNull("lt");
 			        if(stock.getLt_dts()!=null)				
 					stockBuilder=stockBuilder.set("lt_dts",
 							stock.getLt_dts());
+			        else
+			        	stockBuilder=stockBuilder.setNull("lt_dts");
 			        if(stock.getLtt()!=null)				
 					stockBuilder=stockBuilder.set("ltt",
 							stock.getLtt());
+			        else
+			        	stockBuilder=stockBuilder.setNull("ltt");
 			        if(stock.getPcls_fix()!=null)				
 					stockBuilder=stockBuilder.set("pcls_fix",
 							stock.getPcls_fix());
+			        else
+			        	stockBuilder=stockBuilder.setNull("pcls_fix");
 			        if(stock.getS()!=null)				
 					stockBuilder=stockBuilder.set("s",
 							stock.getS());
+			        else
+			        	stockBuilder=stockBuilder.setNull("s");
 			        if(stock.getT()!=null)				
 					stockBuilder=stockBuilder.set("t",
 							stock.getT());
-			      	
+			        else
+			        	stockBuilder=stockBuilder.setNull("t");
+			        
 					stockBuilder=stockBuilder.set("percentage",
 							(stock.getPercentage())
 									);
