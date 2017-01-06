@@ -4,6 +4,7 @@ public class UserStock extends User {
 	
 	
 	private long invAmt;
+	private String investSchdAlertType;
 	private Stock[] stocks;
 	
 	
@@ -19,6 +20,14 @@ public class UserStock extends User {
 	public void setStocks(Stock[] stocks) {
 		this.stocks = stocks;
 	}
+	public String getInvestSchdAlertType() {
+		return investSchdAlertType;
+	}
+	public void setInvestSchdAlertType(String investSchdAlertType) {
+		this.investSchdAlertType = investSchdAlertType;
+	}
+	
+
 
 	
 	

@@ -55,6 +55,13 @@
 					<button (click)="saveStockCalc()">Save</button>
 				</td>
 			</tr>
+            <tr>
+                <td colspan="5"> Schedule Alert
+					<select [(ngModel)]="userStock.investSchdAlertType">
+		                <option *ngFor="let schd of SchedulerLst" [ngValue]="schd.value">{{schd.name}}</option>
+				</td>
+                
+			</tr>
 
 		</tbody>
 	</table></div>

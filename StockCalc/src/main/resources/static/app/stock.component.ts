@@ -20,6 +20,10 @@ import { Configuration } from './app.constants';
 })
 export class StockComponent {
 
+
+  private SchedulerLst = [{"name":"select","value":"0"}, {"name":"Monthly","value":"M"}, {"name":"Yearly","Value":"Y"},
+  {"name":"Weekly","Value":"W"},{"name":"Daily","Value":"D"}];
+
   /*stock.setId("784961");
     stock.setT("TCS");
     stock.setE("NSE");
@@ -35,6 +39,7 @@ export class StockComponent {
   private errorMsg: string;
   private isError: boolean = false;
   private exchangeNames: string[] =['NSE','BOM','NYSE'];
+  private SchedulerLst:  
   private exchangeName: string=this.exchangeNames[0];
   private userStock:UserStock=new UserStock();
   private actionMessage:string="";

@@ -3,22 +3,30 @@ package hello.service;
 import hello.Stock;
 import hello.User;
 import hello.UserStock;
+import hello.mail.SendMail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.cloud.datastore.Datastore;
 import com.google.cloud.datastore.DatastoreException;
 import com.google.cloud.datastore.DatastoreOptions;
 import com.google.cloud.datastore.DateTime;
 import com.google.cloud.datastore.Entity;
-import com.google.cloud.datastore.Key;
 import com.google.cloud.datastore.Entity.Builder;
+import com.google.cloud.datastore.Key;
 import com.google.cloud.datastore.KeyFactory;
-import com.google.cloud.datastore.LongValue;
 import com.google.cloud.datastore.Query;
 import com.google.cloud.datastore.QueryResults;
 import com.google.cloud.datastore.StringValue;
@@ -31,6 +39,8 @@ import com.google.cloud.datastore.StructuredQuery.PropertyFilter;
  */
 @Service
 public class StockUserService {
+	
+	private static final Logger log = LoggerFactory.getLogger(StockUserService.class);
 
 	// [START build_service]
 	// Create an authorized Datastore service using Application Default
@@ -84,15 +94,15 @@ public class StockUserService {
 		QueryResults<Entity> users = datastore.run(query);
 		System.out.println(query.toString() + users);
 		if (users.hasNext()) {
-			Entity userE = users.next();
-		
+			Entity userE = users.next();		
 			Key key = keyFactory.newKey(userE.getKey().getId());
 			Entity userEntity = Entity.newBuilder(key)
 					.set("invAmt", userStock.getInvAmt())
+					.set("investSchdAlertType", userStock.getInvestSchdAlertType())
 					.set("emailid",userE.getString("emailid"))
-					.set("password",userE.getString("password")).build();
-			
+					.set("password",userE.getString("password")).build();			
 			datastore.update(userEntity);
+			
 			System.out.println("updated"  + userEntity);
 			// Entity userStockE =new Entity
 
@@ -130,6 +140,7 @@ public class StockUserService {
 			userStock.setEmailid(emailid);
 			userStock.setId(userE.getKey().getId());
 			userStock.setInvAmt(userE.getLong("invAmt"));
+			userStock.setInvestSchdAlertType(userE.getString("investSchdAlertType"));
 
 			Query<Entity> query1 = Query
 					.newEntityQueryBuilder()
@@ -311,7 +322,7 @@ public class StockUserService {
 
 		Query<Entity> query = Query.newEntityQueryBuilder()
 				.setKind("StockCalc_User")
-				.setFilter(PropertyFilter.eq("emailid", emailId)).build();
+				.setFilter(PropertyFilter.eq("investSchdAlertType", emailId)).build();
 
 		QueryResults<Entity> users = datastore.run(query);
 
@@ -436,6 +447,112 @@ public class StockUserService {
 					"expected exactly %d arg(s), found %d", expectedLength,
 					args.length));
 		}
+	}
+	
+	
+	public void sendStockEmailNoticationToUsers(String invSchdType){
+		
+		Query<Entity> query = Query.newEntityQueryBuilder()
+				.setKind("StockCalc_User")
+				.setFilter(PropertyFilter.eq("emailid", invSchdType)).build();
+		QueryResults<Entity> users = datastore.run(query);
+		System.out.println(query.toString() + users);
+		while (users.hasNext()) {
+			try{
+			Entity user=users.next();
+			UserStock userStock=retriveUserStock(user.getString("emailid"));
+			String html=buildUserStockHtml(userStock);
+			new SendMail().sendMail("admin@StockCalc.com",userStock.getEmailid() ,userStock.getEmailid().substring(userStock.getEmailid().indexOf(".")), "Time To Invest", html);
+			
+			}catch(Exception e){
+				log.error(e.getMessage(),e);
+			}
+			
+			
+			
+		}
+		
+	}
+	
+	private String buildUserStockHtml(UserStock userStock) throws JsonParseException, JsonMappingException, IOException{
+		StringBuilder htmlBuilder=new StringBuilder();
+		htmlBuilder.append("<html>").append("<body>").append("<label>InvestMent:").append(userStock.getInvAmt()).append("</label>");		
+		htmlBuilder.append("<table><tr>").append("<th>Excahnge</th><th>Stock Name</th><th>Stock Price</th><th>Percentage</th><th>quantity</th><th>Total Amt</th></tr>");	
+		for(Stock stock:userStock.getStocks()){			
+			Stock latStock=getStockByStockName(stock.getE(),stock.getT());
+			double qty = Math.floor((userStock.getInvAmt() * (stock.getPercentage() / 100)) / Double.parseDouble(latStock.getL_fix()));
+		    double totalAmt = qty * Double.parseDouble(stock.getL_fix());
+			 htmlBuilder.append("<tr>")
+		    .append("<td>").append(stock.getE()).append("</td>")
+		    .append("<td>").append(stock.getT()).append("</td>")				
+			.append("<td>").append(latStock.getL()).append("</td>")
+		    .append("<td>").append(stock.getPercentage()).append("</td>")
+		    .append("<td>").append(qty).append("</td>")
+		    .append("<td>").append(totalAmt).append("</td>")
+		    .append("</tr>");
+		}
+		return htmlBuilder.toString();
+	}
+	
+	
+	public Stock getStockByStockName(String exchange,String stockName) throws JsonParseException, JsonMappingException, IOException{
+		
+		
+		//String url1="http://finance.google.com/finance/info?client=ig";
+				//https://www.google.com/finance/info?q=NSE:TCS
+				String url1="https://www.google.com/finance/info?";
+				System.out.println("stockName"+stockName);
+				String url2="q="+exchange+":"+stockName;
+				
+				System.out.println("URL"+url1+url2);
+				  RestTemplate restTemplate = new RestTemplate();
+			        String quote = restTemplate.getForObject(url1+url2, String.class);
+			        	        quote=quote.replaceAll("//", "");
+			        System.out.println("quote"+quote);
+			       // String price=getStockFromJson(quote);
+			        
+			        
+			        return getStockFromJson(quote)[0];
+	}
+	
+	
+private Stock[] getStockFromJson(String json) throws JsonParseException, JsonMappingException, IOException{
+		
+		ObjectMapper mapper = new ObjectMapper();
+		//JSON from file to Object
+		List objList = mapper.readValue(json, List.class);
+
+		//JSON from URL to Object
+		//Staff obj = mapper.readValue(new URL("http://mkyong.com/api/staff.json"), Staff.class);
+
+		//JSON from String to Object
+		//Staff obj = mapper.readValue(jsonInString, Staff.class);
+		String price=null;
+		List<Stock> stockList=new ArrayList<Stock>();
+		for(Object object:objList){
+			
+			 System.out.println(object);
+			 Map map=(Map)(object);
+			 if(map!=null && map.containsKey("l")){
+				 Stock stock=new Stock();
+				price= map.get("l").toString();
+				stock.setId(map.get("id").toString());
+				stock.setT(map.get("t").toString());
+				stock.setE(map.get("e").toString());				
+				stock.setL(map.get("l").toString());
+				stock.setL_fix(map.get("l_fix").toString());
+				stock.setL_cur(map.get("l_cur").toString());
+				stock.setS(map.get("s").toString());
+				stock.setLtt(map.get("ltt").toString());
+				stockList.add(stock);
+			 }
+			 
+			 
+		}
+		
+		
+		return stockList.toArray(new Stock[0]);
+		
 	}
 
 	private static void printUsage() {
