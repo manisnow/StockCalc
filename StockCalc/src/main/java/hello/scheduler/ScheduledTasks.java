@@ -41,8 +41,8 @@ public class ScheduledTasks {
 	
 	
 
-	@Autowired
-	StockUserService stockUserService;;
+	//@Autowired
+	//StockUserService stockUserService;;
 
     private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
@@ -51,7 +51,7 @@ public class ScheduledTasks {
     @Scheduled(fixedRate = 10000)
     public void reportCurrentTime() {
         log.info("The time is now {}", dateFormat.format(new Date()));
-        stockUserService.sendStockEmailNoticationToUsers("D");
+       // stockUserService.sendStockEmailNoticationToUsers("D");
     	log.info("RunEveryWeekMonday Ended : The time is now {}", dateFormat.format(new Date()));
     }
     
