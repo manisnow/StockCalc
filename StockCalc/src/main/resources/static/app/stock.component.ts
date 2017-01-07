@@ -24,14 +24,6 @@ export class StockComponent {
   private SchedulerLst = [{"name":"select","value":"0"}, {"name":"Monthly","value":"M"}, {"name":"Yearly","Value":"Y"},
   {"name":"Weekly","Value":"W"},{"name":"Daily","Value":"D"}];
 
-  /*stock.setId("784961");
-    stock.setT("TCS");
-    stock.setE("NSE");
-    stock.setL("2,299.80");
-    stock.setL_fix("2,299.80");
-    stock.setL_cur("&#8377;2,299.80");
-    stock.setS("0");
-    stock.setLtt("3:48PM GMT+5:30");*/
   private textValue = "";  
   private investTextValue = "";
   private stocksArray: Array<string> = new Array<string>();
@@ -39,7 +31,6 @@ export class StockComponent {
   private errorMsg: string;
   private isError: boolean = false;
   private exchangeNames: string[] =['NSE','BOM','NYSE'];
-  private SchedulerLst:  
   private exchangeName: string=this.exchangeNames[0];
   private userStock:UserStock=new UserStock();
   private actionMessage:string="";
