@@ -322,7 +322,7 @@ public class StockUserService {
 
 		Query<Entity> query = Query.newEntityQueryBuilder()
 				.setKind("StockCalc_User")
-				.setFilter(PropertyFilter.eq("investSchdAlertType", emailId)).build();
+				.setFilter(PropertyFilter.eq("emailid", emailId)).build();
 
 		QueryResults<Entity> users = datastore.run(query);
 
@@ -454,7 +454,7 @@ public class StockUserService {
 		
 		Query<Entity> query = Query.newEntityQueryBuilder()
 				.setKind("StockCalc_User")
-				.setFilter(PropertyFilter.eq("emailid", invSchdType)).build();
+				.setFilter(PropertyFilter.eq("investSchdAlertType", invSchdType)).build();
 		QueryResults<Entity> users = datastore.run(query);
 		System.out.println(query.toString() + users);
 		while (users.hasNext()) {
