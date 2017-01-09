@@ -61,7 +61,10 @@ export class StockComponent {
     
   }
 
-  
+  private displaySchdAlertType(){
+
+    alert("investSchdAlertType" +  this.userStock.investSchdAlertType);
+  }
  
   private selectExchange(value:string) {
     this.exchangeName = value;
