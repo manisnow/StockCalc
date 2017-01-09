@@ -24,13 +24,21 @@ export class StockComponent {
   private SchedulerLst = [{"name":"select","value":"0"}, {"name":"Monthly","value":"M"}, {"name":"Yearly","Value":"Y"},
   {"name":"Weekly","Value":"W"},{"name":"Daily","Value":"D"}];
 
+  /*stock.setId("784961");
+    stock.setT("TCS");
+    stock.setE("NSE");
+    stock.setL("2,299.80");
+    stock.setL_fix("2,299.80");
+    stock.setL_cur("&#8377;2,299.80");
+    stock.setS("0");
+    stock.setLtt("3:48PM GMT+5:30");*/
   private textValue = "";  
   private investTextValue = "";
   private stocksArray: Array<string> = new Array<string>();
   private stock: Stock;
   private errorMsg: string;
   private isError: boolean = false;
-  private exchangeNames: string[] =['NSE','BOM','NYSE'];
+  private exchangeNames: string[] =['NSE','BOM','NYSE']; 
   private exchangeName: string=this.exchangeNames[0];
   private userStock:UserStock=new UserStock();
   private actionMessage:string="";
@@ -90,6 +98,7 @@ export class StockComponent {
                   this.actionMessage="Stocks Fetched";
                 },
                 error => {
+                 this.userStock=new UserStock();
                  this.isError=true;
                  this.errorMsg=error;
                 });
@@ -113,10 +122,10 @@ export class StockComponent {
     } else {
       
     
-    console.log("Percentage" + sto.percentage);
-    console.log("Percentage" + (sto.percentage / 100));
-    console.log("Percentage" + (this.userStock.invAmt * (sto.percentage / 100)));
-    console.log("Percentage" + ((this.userStock.invAmt * (sto.percentage / 100)) / sto.l));
+    //console.log("Percentage" + sto.percentage);
+    //console.log("Percentage" + (sto.percentage / 100));
+    //console.log("Percentage" + (this.userStock.invAmt * (sto.percentage / 100)));
+    //console.log("Percentage" + ((this.userStock.invAmt * (sto.percentage / 100)) / sto.l));
     if (this.userStock.invAmt == 0) {
       this.errorMsg = "Please Enter the Investment Amount";
       this.isError = true;

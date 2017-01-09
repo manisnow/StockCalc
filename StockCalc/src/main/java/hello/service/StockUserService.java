@@ -140,8 +140,12 @@ public class StockUserService {
 
 			userStock.setEmailid(emailid);
 			userStock.setId(userE.getKey().getId());
+			if(userE.contains("invAmt")){
 			userStock.setInvAmt(userE.getLong("invAmt"));
+			}
+			if(userE.contains("investSchdAlertType")){
 			userStock.setInvestSchdAlertType(userE.getString("investSchdAlertType"));
+		     }
 
 			Query<Entity> query1 = Query
 					.newEntityQueryBuilder()
