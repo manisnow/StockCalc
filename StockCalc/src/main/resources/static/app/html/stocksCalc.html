@@ -23,16 +23,19 @@
 		(keyup)="onKey($event,textbox.value)">
 	<button (click)="getStock(textbox.value)">get Stocks</button>
 	<button (click)="clearTextArea()">Clear</button>
-
 	<table>
-		 <tr>
+ <tr>
                 <td colspan="5"> Schedule Alert
-					<select [(ngModel)]="userStock.investSchdAlertType" >
+					<select [(ngModel)]="userStock.investSchdAlertType" (click)="displaySchdAlertType()">
 		                <option *ngFor="let schd of SchedulerLst" [ngValue]="schd.value">{{schd.name}}</option>
 					</select>
 				</td>
                 
 			</tr>
+			
+			</table>
+	<table>
+		
 		<thead>
 			<th>Excahnge</th>
 			<th>Stock Name</th>
