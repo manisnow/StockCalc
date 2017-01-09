@@ -17,7 +17,7 @@ public class SendMail {
  Session session = Session.getDefaultInstance(prop,null);
  try{    
      Message msg = new MimeMessage(session);
-     msg.setFrom(new InternetAddress(sendEmailFrom));
+     msg.setFrom(new InternetAddress(sendEmailFrom,"Admin","UTF-8"));
      msg.addRecipient(Message.RecipientType.TO, new InternetAddress(sendMailTo, "Mr./Ms. "+recipientName));
      msg.setSubject(messageSubject);
      msg.setText(messageText);

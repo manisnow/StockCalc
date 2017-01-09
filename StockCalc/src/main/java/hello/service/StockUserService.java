@@ -467,7 +467,7 @@ public class StockUserService {
 			Entity user=users.next();
 			UserStock userStock=retriveUserStock(user.getString("emailid"));
 			String html=buildUserStockHtml(userStock);
-			new SendMail().sendMail("admin@StockCalc.com",userStock.getEmailid() ,userStock.getEmailid().substring(userStock.getEmailid().indexOf(".")), "Time To Invest", html);
+			new SendMail().sendMail("manisnow@gmail.com",userStock.getEmailid() ,userStock.getEmailid().substring(userStock.getEmailid().indexOf(".")), "Time To Invest", html);
 			
 			}catch(Exception e){
 				log.error(e.getMessage(),e);
