@@ -21,8 +21,8 @@ import { Configuration } from './app.constants';
 export class StockComponent {
 
 
-  private SchedulerLst = [{"name":"select","value":"0"}, {"name":"Monthly","value":"M"}, {"name":"Yearly","Value":"Y"},
-  {"name":"Weekly","Value":"W"},{"name":"Daily","Value":"D"}];
+  private SchedulerLst = [{"name":"select","value":"0"}, {"name":"Monthly","value":"M"}, {"name":"Yearly","value":"Y"},
+  {"name":"Weekly","value":"W"},{"name":"Daily","value":"D"}];
 
   /*stock.setId("784961");
     stock.setT("TCS");
@@ -63,7 +63,7 @@ export class StockComponent {
 
   private displaySchdAlertType(){
 
-    alert("investSchdAlertType" +  this.userStock.investSchdAlertType);
+ //   alert("investSchdAlertType" +  this.userStock.investSchdAlertType);
   }
  
   private selectExchange(value:string) {
