@@ -1,5 +1,7 @@
 package hello;
 
+import java.util.Arrays;
+
 public class UserStock extends User {
 	
 	
@@ -25,6 +27,13 @@ public class UserStock extends User {
 	}
 	public void setInvestSchdAlertType(String investSchdAlertType) {
 		this.investSchdAlertType = investSchdAlertType;
+	}
+	@Override
+	public String toString() {
+		return "UserStock [invAmt=" + invAmt + ", investSchdAlertType="
+				+ investSchdAlertType + ", stocks=" + Arrays.toString(stocks)
+				+ ", id=" + id + ", emailid=" + emailid + ", password="
+				+ password + "]";
 	}
 	
 
