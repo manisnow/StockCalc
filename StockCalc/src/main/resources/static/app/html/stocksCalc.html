@@ -15,25 +15,22 @@
 		<label> {{actionMessage}} </label>
 		<button (click)="closeAlert()">Hide</button>
 	</div>
+	<br>  <label>Investment</label> &nbsp; <input #investTextBox type="number"
+		[(ngModel)] ="userStock.invAmt" min=1 max=9999999999 step=5>
+		<label> Schedule Alert </label>
+					<select [(ngModel)]="userStock.investSchdAlertType" (change)="displaySchdAlertType()">
+		                <option *ngFor="let schd of SchedulerLst" [ngValue]="schd.value">{{schd.name}}</option>
+					</select>
+		
+		<br>
 	<br> <select [(ngModel)]="exchangeName">
 		<option *ngFor="let value of exchangeNames" [ngValue]="value">{{value}}</option>
-	</select> <label>Investment</label> &nbsp; <input #investTextBox type="number"
-		[(ngModel)] ="userStock.invAmt" min=1 max=9999999999 step=5><br>
-	<br> <input #textbox type="text" [(ngModel)] ="textValue"
+	</select> 
+	<input #textbox type="text" [(ngModel)] ="textValue"
 		(keyup)="onKey($event,textbox.value)">
 	<button (click)="getStock(textbox.value)">get Stocks</button>
 	<button (click)="clearTextArea()">Clear</button>
-	<table>
- <tr>
-                <td colspan="5"> Schedule Alert
-					<select [(ngModel)]="userStock.investSchdAlertType" (click)="displaySchdAlertType()">
-		                <option *ngFor="let schd of SchedulerLst" [ngValue]="schd.value">{{schd.name}}</option>
-					</select>
-				</td>
-                
-			</tr>
-			
-			</table>
+	
 	<table>
 		
 		<thead>
