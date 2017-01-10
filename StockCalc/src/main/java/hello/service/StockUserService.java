@@ -118,7 +118,7 @@ public class StockUserService {
 				
 				Entity entity=stocksE.next();
 				datastore.delete(entity.getKey());
-				log.debug("deleted" + entity.getKey() + " " + entity.getString("emailid"));
+				System.out.println("deleted" + entity.getKey() + " " + entity.getString("emailid"));
 
 			}
 			addStocks(userStock.getStocks(), userStock.getEmailid());

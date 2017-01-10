@@ -46,7 +46,7 @@ export class StockComponent {
 
 
   logout() {
-    alert("logout called");
+   
     this._service.logout();
   }
 
@@ -86,6 +86,7 @@ export class StockComponent {
                   this.actionMessage="Stocks Saved";
                 },
                 error => {
+                  alert(error);
                  this.isError=true;
                  this.errorMsg=error;
                 });

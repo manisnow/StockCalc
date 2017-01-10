@@ -42,7 +42,7 @@ export class AuthenticationService {
        
       localStorage.setItem("user", JSON.stringify(data));
       console.log("localstorage" +  JSON.parse(localStorage.getItem("user")));
-       alert(JSON.parse(localStorage.getItem("user"))+ "---"+JSON.stringify(data));
+       //alert(JSON.parse(localStorage.getItem("user"))+ "---"+JSON.stringify(data));
       this._router.navigate(['home']);      
       return true;
     }else{
@@ -62,12 +62,12 @@ export class AuthenticationService {
   }
  
    checkCredentials(stockC:StockComponent){
-     alert("checking credntial"+ localStorage.getItem("user")+" ----"+JSON.parse(localStorage.getItem("user")));
+     //alert("checking credntial"+ localStorage.getItem("user")+" ----"+JSON.parse(localStorage.getItem("user")));
     if (localStorage.getItem("user") === null){
         this._router.navigate(['login']);
     }else{
     var user=JSON.parse(localStorage.getItem("user"));
-    alert(user+  localStorage.getItem("user"));
+    //alert(user+  localStorage.getItem("user"));
     console.log(user);
     //this.userName=user.emailid;    
     stockC.getStockCalc(user.emailid);
