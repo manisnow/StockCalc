@@ -94,7 +94,7 @@ public class StockController {
 			 System.out.println(object);
 			 Map map=(Map)(object);
 			 if(map!=null && map.containsKey("l")){
-				 Stock stock=new Stock();
+				Stock stock=new Stock();
 				price= map.get("l").toString();
 				stock.setId(map.get("id").toString());
 				stock.setT(map.get("t").toString());

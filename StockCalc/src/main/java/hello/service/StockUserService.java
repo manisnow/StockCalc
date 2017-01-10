@@ -115,8 +115,10 @@ public class StockUserService {
 					.build();
 			QueryResults<Entity> stocksE = datastore.run(query1);
 			while (stocksE.hasNext()) {
-
-				datastore.delete(stocksE.next().getKey());
+				
+				Entity entity=stocksE.next();
+				datastore.delete(entity.getKey());
+				log.debug("deleted" + entity.getKey() + " " + entity.getString("emailid"));
 
 			}
 			addStocks(userStock.getStocks(), userStock.getEmailid());
