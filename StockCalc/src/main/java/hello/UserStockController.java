@@ -34,7 +34,7 @@ public class UserStockController {
 		System.out.println("userStock"+ userStock.getEmailid() );
 		stockUserService.insertOrUpdateUserStock(userStock);
 		  
-		 return new ResponseEntity(String.valueOf("Stocks saved into database"),  HttpStatus.OK);
+		 return new ResponseEntity(userStock,  HttpStatus.OK);
 	  
     }
 	
