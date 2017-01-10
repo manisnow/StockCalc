@@ -159,14 +159,18 @@ public class StockUserService {
 
 			Stock stocks[] = getStocks(stocksE);
 			
+			List<Stock> latStockList=new ArrayList<Stock>();
+			
 			for(Stock stock:stocks){			
 				Stock latStock=getStockByStockName(stock.getE(),stock.getT());
-				int qty = (int) Math.floor((userStock.getInvAmt() * (stock.getPercentage() / 100)) / Double.parseDouble(latStock.getL_fix()));
+				int qty = (int) Math.floor((userStock.getInvAmt() * (stock.getPercentage() / 100.00)) / Double.parseDouble(latStock.getL_fix()));
 			    double totalAmt = qty * Double.parseDouble(stock.getL_fix());
-			    stock.setQty(qty);
-			    stock.setTotalAmt(totalAmt);			    
+			    latStock.setQty(qty);
+			    latStock.setTotalAmt(totalAmt);	
+			    latStock.setPercentage(stock.getPercentage());
+			    latStockList.add(latStock);
 			}
-			userStock.setStocks(stocks);
+			userStock.setStocks(latStockList.toArray(new Stock[0]));
 
 			return userStock;
 		}
