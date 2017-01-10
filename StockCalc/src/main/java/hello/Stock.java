@@ -45,6 +45,8 @@ private	String id;
 @JsonProperty("ccol")	private    String ccol;
 @JsonProperty("pcls_fix")	private    String pcls_fix;
 @JsonProperty("percentage") private long percentage;
+@JsonProperty("qty")private int    qty;
+@JsonProperty("totalAmt")private  double  totalAmt;
 
 
 
@@ -152,6 +154,19 @@ public void setPercentage(long percentage) {
 }
 
 
+
+public int getQty() {
+	return qty;
+}
+public void setQty(int qty) {
+	this.qty = qty;
+}
+public double getTotalAmt() {
+	return totalAmt;
+}
+public void setTotalAmt(double totalAmt) {
+	this.totalAmt = totalAmt;
+}
 @Override
 public String toString() {
 	return "Stock [id=" + id + ", t=" + t + ", e=" + e + ", l=" + l
@@ -159,7 +174,7 @@ public String toString() {
 			+ ltt + ", lt=" + lt + ", lt_dts=" + lt_dts + ", c=" + c
 			+ ", c_fix=" + c_fix + ", cp=" + cp + ", cp_fix=" + cp_fix
 			+ ", ccol=" + ccol + ", pcls_fix=" + pcls_fix + ", percentage="
-			+ percentage + "]";
+			+ percentage + ", qty=" + qty + ", totalAmt=" + totalAmt + "]";
 }
 
 

@@ -128,7 +128,7 @@ public class StockUserService {
 		return null;
 	}
 
-	public UserStock retriveUserStock(String emailid) {
+	public UserStock retriveUserStock(String emailid) throws JsonParseException, JsonMappingException, IOException {
 
 		Query<Entity> query = Query.newEntityQueryBuilder()
 				.setKind("StockCalc_User")
@@ -158,6 +158,14 @@ public class StockUserService {
 			QueryResults<Entity> stocksE = datastore.run(query1);
 
 			Stock stocks[] = getStocks(stocksE);
+			
+			for(Stock stock:stocks){			
+				Stock latStock=getStockByStockName(stock.getE(),stock.getT());
+				int qty = (int) Math.floor((userStock.getInvAmt() * (stock.getPercentage() / 100)) / Double.parseDouble(latStock.getL_fix()));
+			    double totalAmt = qty * Double.parseDouble(stock.getL_fix());
+			    stock.setQty(qty);
+			    stock.setTotalAmt(totalAmt);			    
+			}
 			userStock.setStocks(stocks);
 
 			return userStock;
